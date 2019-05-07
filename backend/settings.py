@@ -1,33 +1,54 @@
 import os
+import dj_database_url
+import sys
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+EN_MODO_TESTS = 'test' in str(sys.argv) or 'migrate' in str(sys.argv)
 SECRET_KEY = '&h8i_90-25+@k)#*+7*oqb63+018hlwoe&y1#oav#wj8)nikb*'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+FRONTEND_URL = os.environ.get('FRONTEND_URL')
+BACKEND_URL = os.environ.get('BACKEND_URL')
+
+HOST_BACKEND = BACKEND_URL.replace("http://", "").replace("https://", "")
+
 DEBUG = True
 
-ALLOWED_HOSTS = []
+VERSION_NUMBER = "0.0.1"
+ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.40', 'localhost', 'localhost:4200', 'presentes.enjambrelab.space', 'presentes-backend.enjambrelab.space', HOST_BACKEND]
+CORS_ORIGIN_WHITELIST = ALLOWED_HOSTS
 
+JSON_API_FORMAT_FIELD_NAMES = 'dasherize'
+JSON_API_FORMAT_RELATION_KEYS = 'dasherize'
+JSON_API_PLURALIZE_RELATION_TYPE = True
+CORS_ORIGIN_ALLOW_ALL = False
+APPEND_SLASH = False
+DATETIME_FORMAT="%H"
 
-# Application definition
+if EN_MODO_TESTS:
+    DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS = False
+    DJANGO_EASY_AUDIT_WATCH_AUTH_EVENTS = False
+    DJANGO_EASY_AUDIT_WATCH_REQUEST_EVENTS = False
+else:
+    DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django_filters',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'easyaudit',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'presentes'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -35,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -58,19 +80,35 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
 }
 
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default']['OPTIONS']['sslmode'] = 'disable'
 
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'PAGE_SIZE': 500,
+    'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework_json_api.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework_json_api.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -87,13 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LANGUAGE_CODE = 'es'
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.11/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 
@@ -101,8 +135,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+MEDIA_ROOT = os.environ.get('PRESENTES_MEDIA_ROOT', 'media_archivos_locales')
+MEDIA_URL = '/media/'

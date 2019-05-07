@@ -1,11 +1,7 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
-
-
-[dev-packages]
 
 [packages]
 django = "*"
@@ -32,6 +28,9 @@ requests = "*"
 xlwt = "*"
 colorama = "*"
 pillow = "*"
+django-easy-audit = "*"
+
+[dev-packages]
 
 [requires]
 python_version = "3"

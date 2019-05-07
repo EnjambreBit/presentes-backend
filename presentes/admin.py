@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib import admin
+from presentes.models.perfiles import Perfil, PerfilAdmin
 
-# Register your models here.
+admin.site.register(Perfil, PerfilAdmin)
