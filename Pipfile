@@ -7,8 +7,31 @@ name = "pypi"
 
 [dev-packages]
 
-
-
 [packages]
-
 django = "*"
+dj-static = "*"
+dj-database-url = "*"
+ipdb = "*"
+pprint = "*"
+watchdog = "*"
+"psycopg2-binary" = "*"
+honcho = "*"
+gunicorn = "*"
+"flake8" = "*"
+"flake8-colors" = "*"
+django-cors-headers = "*"
+djangorestframework-jsonapi = "*"
+djangorestframework = "*"
+django-filter = "*"
+bumpversion = "*"
+pytest-django = "*"
+pytest-watch = "*"
+xlrd = "*"
+requests = "*"
+"beautifulsoup4" = "*"
+xlwt = "*"
+colorama = "*"
+pillow = "*"
+
+[requires]
+python_version = "3"

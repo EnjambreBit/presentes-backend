@@ -13,3 +13,12 @@ make iniciar
 make migrar
 make ejecutar
 ```
+
+## Cómo crear modelos
+
+Para crear modelos nuevos se puede ejecutar este comando, especificando el nombre de la aplicación,
+módulo y módulo en plural. Por ejemplo:
+
+```
+pipenv run python django-api-helper/generar.py presentes Perfil "perfiles"
+```
