@@ -1,4 +1,4 @@
 from django.contrib import admin
-from presentes.models.perfiles import Perfil, PerfilAdmin
+from presentes.admin_classes.perfiles import Perfil, PerfilAdmin
 
 admin.site.register(Perfil, PerfilAdmin)

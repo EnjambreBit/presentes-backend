@@ -8,7 +8,7 @@ from django.contrib.auth.models import Permission
 class Perfil(models.Model):
     nombre = models.CharField(max_length=200, default="", help_text="")
     apellido = models.CharField(max_length=200, default="", help_text="")
-    user = models.ManyToManyField(User, on_delete=models.CASCADE, default=None)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     grupos = models.ManyToManyField(Group, related_name="perfiles", default=None, blank=True)
 
     class Meta:
