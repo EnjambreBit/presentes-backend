@@ -80,8 +80,8 @@ version:
 
 deploy:
 	git remote add dokku dokku@enjambrelab.space:presentes-backend || true
-	git checkout devel
-	git push dokku devel:master
+	git checkout master
+	git push dokku master
 
 cargar_datos:
 	@pipenv run python cargar_datos.py
