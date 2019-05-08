@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Electrónica Backend</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+
+    <style>
+      .content {
+        padding: 2em;
+        text-align: center;
+      }
+
+      .panel {
+        padding: 1em;
+      }
+
+      p {
+        line-height: 1.6;
+        font-family: sans-serif;
+        font-weight: 100;
+        font-size: 1.125em;
+      }
+
+
+      .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 1em;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class='content'>
+      {% load static %}
+
+      <p>Este es el backend de <strong>Presentes</strong>, desde aquí se pueden
+        realizar tareas de administración o exportación de datos masivas.
+      </p>
+
+      <p>Número de versión: {{version}}</p>
+
+      <div class='panel'>
+          <p><a class="pure-button pure-button-primary" href='/admin/'>Ingresar al administrador</a>
+      </div>
+
+    </div>
+  </body>
+</html>
