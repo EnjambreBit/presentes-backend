@@ -6,12 +6,15 @@ from presentes.views.home import home
 from rest_framework.authtoken.views import obtain_auth_token
 
 from presentes.views.perfiles import PerfilViewSet
+from presentes.views.my_custom_auth import my_obtain_auth_token
 
 router = routers.DefaultRouter(trailing_slash=False)
+
+router.register("perfiles", PerfilViewSet)
 
 urlpatterns = [
     path('', home, name='home'),
     path('admin/', admin.site.urls),
-    # path('api/auth/', my_obtain_auth_token),
+    path('api/auth/', my_obtain_auth_token),
     path('api/', include(router.urls))
 ]

@@ -27,3 +27,12 @@ class Perfil(models.Model):
 
     def email(self):
         return self.user.email
+
+    @classmethod
+    def serializar_personalizado(kls, perfil, build_absolute_uri):
+        datos = {
+            "id": perfil.id,
+            "nombreCompleto": perfil.nombre_completo(),
+        }
+
+        return datos
