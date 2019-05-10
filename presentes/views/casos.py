@@ -45,7 +45,7 @@ class CasoViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-    @action(detail=False, methods=['get'], url_path='obtener-casos')
+    @action(detail=False, permission_classes=[permissions.AllowAny], methods=['get'], url_path='obtener-casos')
     def obtener_casos(self, request, *args, **kwargs):
         casos = Caso.objects.all()
 
