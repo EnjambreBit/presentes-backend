@@ -6,7 +6,7 @@ class Provincia(models.Model):
     pais = models.ForeignKey('Pais', related_name="provincias", default=None, null=True, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['nombre']
         db_table = 'provincias'
         verbose_name_plural = "provincias"
 
