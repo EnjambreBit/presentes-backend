@@ -7,12 +7,16 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 from presentes.views.perfiles import PerfilViewSet
 from presentes.views.casos import CasoViewSet
+from presentes.views.provincias import ProvinciaViewSet
+from presentes.views.categorias import CategoriaViewSet
 from presentes.views.my_custom_auth import my_obtain_auth_token
 
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register("perfiles", PerfilViewSet)
 router.register("casos", CasoViewSet)
+router.register("provincias", ProvinciaViewSet)
+router.register("categorias", CategoriaViewSet)
 
 urlpatterns = [
     path('', home, name='home'),

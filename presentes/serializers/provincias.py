@@ -12,8 +12,8 @@ class ProvinciaSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre', 'sigla', 'pais')
 
     included_serializers = {
-        'pais': 'presentes.serializers.pais.PaisSerializer'
+        'pais': 'presentes.serializers.paises.PaisSerializer'
     }
 
     class JSONAPIMeta:
-        included_resources = ['participaciones', 'pais']
+        included_resources = ['pais',]

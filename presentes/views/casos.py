@@ -65,3 +65,13 @@ class CasoViewSet(viewsets.ModelViewSet):
         ]
 
         return Response(data)
+
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        request.data['provincia'] = [
+            {
+                "type": 'provincia',
+                "id": request.data['provincia']['id']
+            }
+        ]
+        return super(CasoViewSet, self).create(request, *args, **kwargs)

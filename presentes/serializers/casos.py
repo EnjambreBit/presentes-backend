@@ -11,7 +11,7 @@ class CasoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Caso
-        fields = ('id', 'nombre', 'apellido', 'localidad', 'provincia', 'fecha_del_hecho', 'latitud', 'longitud', 'cateogira', 'etiquetas', 'fecha_de_creacion')  # 'pais'
+        fields = ('id', 'nombre', 'apellido', 'lugar_de_nacimiento','fecha_de_nacimiento', 'localidad', 'provincia', 'fecha_del_hecho', 'latitud', 'longitud', 'categoria', 'etiquetas')
 
     included_serializers = {
         'etiquetas': 'presentes.serializers.etiquetas.EtiquetaSerializer',
