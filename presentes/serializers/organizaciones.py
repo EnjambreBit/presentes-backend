@@ -9,11 +9,20 @@ class OrganizacionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organizacion
-        fields = ('id', 'nombre', 'direccion', 'telefono', 'provincia')
+        fields = (
+            'id',
+            'nombre',
+            'direccion',
+            'telefono',
+            'email',
+            'descripcion',
+            'localidad',
+            'provincia'
+        )
 
     included_serializers = {
-        'provincia': 'presentes.serializers.provincia.ProvinciaSerializer'
+        'provincia': 'presentes.serializers.provincias.ProvinciaSerializer'
     }
 
     class JSONAPIMeta:
-        included_resources = ['participaciones', 'provincia']
+        included_resources = ['provincia']
