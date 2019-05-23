@@ -14,12 +14,17 @@ class CasoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Caso
+        read_only_fields = [
+            'lugar_de_nacimiento',
+            'fecha_de_nacimiento'
+        ]
         fields = [
             'id',
             'nombre',
             'apellido',
             'lugar_de_nacimiento',
             'fecha_de_nacimiento',
+            'lugar_del_hecho',
             'localidad',
             'provincia',
             'fecha_del_hecho',

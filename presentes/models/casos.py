@@ -12,6 +12,7 @@ class Caso(models.Model):
 
     #Datos del hecho
     fecha_del_hecho = models.DateField(default=datetime.date.today)
+    lugar_del_hecho = models.CharField(max_length=250, default="")
     localidad = models.CharField(max_length=200, default="", help_text="")
     provincia = models.ForeignKey('Provincia', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
     latitud = models.CharField(max_length=20, default="", help_text="")
