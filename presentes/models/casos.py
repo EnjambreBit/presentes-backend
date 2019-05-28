@@ -22,6 +22,7 @@ class Caso(models.Model):
     etiquetas = models.ManyToManyField('Etiqueta', related_name="casos", default=None, blank=True)
 
     fecha_de_creacion = models.DateField(default=datetime.date.today)
+    estado_de_publicacion = models.ForeignKey('EstadoDeCaso', related_name="casos", default=None, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-id']

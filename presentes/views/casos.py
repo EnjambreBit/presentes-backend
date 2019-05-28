@@ -66,5 +66,26 @@ class CasoViewSet(viewsets.ModelViewSet):
 
         return Response(data)
 
+    @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos-publicos')
+    def obtener_casos_publicos(self, request, *args, **kwargs):
+        casos = Caso.objects.filter(estado_de_publicacion__nombre="Público")
+
+        data = [
+            {
+                "id": c.id,
+                "nombre": c.nombre,
+                "apellido": c.apellido,
+                "localidad": c.localidad,
+                "provincia": c.provincia.nombre,
+                "fecha": c.fecha_del_hecho,
+                "latitud": c.latitud,
+                "longitud": c.longitud,
+                "categoria": c.categoria.nombre,
+                "coordenadas": f"[{c.latitud}, {c.longitud}]"
+            } for c in casos
+        ]
+
+        return Response(data)
+
     def create(self, request, *args, **kwargs):
         return super(CasoViewSet, self).create(request, *args, **kwargs)

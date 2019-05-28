@@ -10,6 +10,7 @@ from presentes.views.casos import CasoViewSet
 from presentes.views.organizaciones import OrganizacionViewSet
 from presentes.views.provincias import ProvinciaViewSet
 from presentes.views.categorias import CategoriaViewSet
+from presentes.views.estados_de_caso import EstadoDeCasoViewSet
 from presentes.views.my_custom_auth import my_obtain_auth_token
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -19,6 +20,7 @@ router.register("casos", CasoViewSet)
 router.register("organizaciones", OrganizacionViewSet)
 router.register("provincias", ProvinciaViewSet)
 router.register("categorias", CategoriaViewSet)
+router.register("estados-de-caso", EstadoDeCasoViewSet)
 
 urlpatterns = [
     path('', home, name='home'),

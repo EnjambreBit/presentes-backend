@@ -6,9 +6,10 @@ def crear_categorias(apps, schema_editor):
     CategoriaModel = apps.get_model("presentes", "Categoria")
 
     categorias = [
-        "Ataques",
-        "Travesticidio Social",
-        "Asesinatos"
+        "Asesinatos a personas LGBT+",
+        "Ataques a personas",
+        "Ataques a lugares",
+        "Muerte por travesticidio social",
     ]
 
     for categoria in categorias:
