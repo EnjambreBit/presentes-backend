@@ -17,16 +17,13 @@ class CasoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Caso
         read_only_fields = [
-            'lugar_de_nacimiento',
-            'fecha_de_nacimiento'
         ]
         fields = [
             'id',
             'nombre',
             'apellido',
             'lugar_de_nacimiento',
-            'fecha_de_nacimiento',
-            'lugar_del_hecho',
+            'edad',
             'localidad',
             'provincia',
             'fecha_del_hecho',
@@ -34,7 +31,16 @@ class CasoSerializer(serializers.ModelSerializer):
             'longitud',
             'categoria',
             'etiquetas',
-            'estado_de_publicacion'
+            'estado_de_publicacion',
+            'causa_de_la_muerte',
+            'es_migrante',
+            'pais_de_origen',
+            'anio_de_llegada',
+            'hay_denuncia',
+            'fecha_de_denuncia',
+            'ante_quien_se_hizo_la_denuncia',
+            'por_que_no_denuncio',
+            'la_denuncia_reconoce_genero'
         ]
 
     included_serializers = {
