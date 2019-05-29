@@ -61,6 +61,7 @@ class PerfilViewSet(viewsets.ModelViewSet):
             'email': perfil.email(),
             'usuario': perfil.user.username,
             'version_del_servidor': VERSION_NUMBER,
+            'permisos': perfil.obtener_diccionario_de_permisos(),
         }
 
         return Response(data)
