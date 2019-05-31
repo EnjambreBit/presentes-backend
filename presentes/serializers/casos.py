@@ -11,8 +11,8 @@ from rest_framework_json_api.relations import ResourceRelatedField
 class CasoSerializer(serializers.ModelSerializer):
 
     provincia = ResourceRelatedField(queryset=Provincia.objects, many=False, read_only=False)
-    provincia_del_penal = ResourceRelatedField(many=False, read_only=True)
-    violencia_institucion_provincia = ResourceRelatedField(many=False, read_only=True)
+    provincia_del_penal = ResourceRelatedField(queryset=Provincia.objects,many=False, read_only=False, allow_null=True)
+    violencia_institucion_provincia = ResourceRelatedField(queryset=Provincia.objects,many=False, read_only=False, allow_null=True)
     categoria = ResourceRelatedField(queryset=Categoria.objects, many=False, read_only=False)
     etiquetas = ResourceRelatedField(many=True, read_only=True)
     cj_organizaciones = ResourceRelatedField(many=True, read_only=True)
