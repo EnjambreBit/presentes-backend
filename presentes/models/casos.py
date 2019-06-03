@@ -46,10 +46,10 @@ class Caso(models.Model):
     tiene_acceso_a_prestaciones_de_salud = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     prestaciones_de_salud = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     #Travesticidio y Travesticidio social
-    ocupacion = models.CharField(max_length=200, default="", blank=True, help_text="")
-    estudios_cursados = models.CharField(max_length=200, default="", blank=True, help_text="")
+    ocupacion = models.CharField(max_length=200, null=True,default="", blank=True, help_text="")
+    estudios_cursados = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
     estaba_en_situacion_de_calle = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
-    donde_vivia = models.CharField(max_length=200, default="", blank=True, help_text="")
+    donde_vivia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
 
     #Situación de encierro
     # desde_cuando_estaba_detenida
@@ -63,13 +63,13 @@ class Caso(models.Model):
     #Es migrante
     es_migrante =  models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
-    pais_de_origen = models.CharField(max_length=200, default="", blank=True, help_text="")
-    anio_de_llegada = models.CharField(max_length=4, default="", blank=True, help_text="")
+    pais_de_origen = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
+    anio_de_llegada = models.CharField(max_length=4, default="",null=True, blank=True, help_text="")
 
     #Denuncia
     hay_denuncia = models.CharField(max_length=2, choices=OPCIONES_SI_NO_NOSABE, default=None, null=True, blank=True)
     fecha_de_denuncia = models.DateField(default=datetime.date.today, null=True, blank=True)
-    ante_quien_se_hizo_la_denuncia = models.CharField(max_length=200, default="", blank=True, help_text="")
+    ante_quien_se_hizo_la_denuncia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
     por_que_no_denuncio = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     la_denuncia_reconoce_genero = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
@@ -92,11 +92,11 @@ class Caso(models.Model):
     violencia_institucion_localidad = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     violencia_institucion_provincia = models.ForeignKey('Provincia', related_name="casos_violencia_institucional", default=None, blank=True, null=True, on_delete=models.CASCADE)
 
-    observaciones = models.TextField(default="", blank=True, help_text="")
+    observaciones = models.TextField(default="",null=True, blank=True, help_text="")
 
     #La informacion del formulario fue brindada por
-    nombre_de_quien_brindo_informacion = models.CharField(max_length=200, default="", blank=True, help_text="")
-    telefono_de_quien_brindo_informacion = models.CharField(max_length=200, default="", blank=True, help_text="")
+    nombre_de_quien_brindo_informacion = models.CharField(max_length=200,null=True, default="", blank=True, help_text="")
+    telefono_de_quien_brindo_informacion = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
 
 
 
