@@ -7,7 +7,7 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
 def crear_permisos_de_usuarios(app, schema_editor):
-    grupo = Group.objects.get(name="Administrador")
+    grupo = Group.objects.get_or_create(name="Administrador")
 
     tipo = ContentType.objects.get(app_label='presentes', model=grupo)
 
