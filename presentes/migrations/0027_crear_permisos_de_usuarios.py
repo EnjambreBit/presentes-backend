@@ -7,15 +7,15 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
 def crear_permisos_de_usuarios(app, schema_editor):
-    grupo = Group.objects.get_or_create(name="Administrador")
+    grupo = Group.objects.get(name="Administrador")
 
-    tipo = ContentType.objects.get(app_label='presentes', model=grupo)
+    tipo, _ = ContentType.objects.get_or_create(app_label='presentes', model=grupo)
 
-    permiso_listar = Permission.objects.create(name='casos', codename='casos.puede_listar', content_type=tipo)
-    permiso_crear = Permission.objects.create(name='casos', codename='casos.puede_crear', content_type=tipo)
-    permiso_eliminar = Permission.objects.create(name='casos', codename='casos.puede_eliminar', content_type=tipo)
-    permiso_editar = Permission.objects.create(name='casos', codename='casos.puede_editar', content_type=tipo)
-    permiso_validar = Permission.objects.create(name='casos', codename='casos.puede_validar', content_type=tipo)
+    permiso_listar = Permission.objects.create(name='casos.puede_listar', codename='casos.puede_listar', content_type=tipo)
+    permiso_crear = Permission.objects.create(name='casos.puede_crear', codename='casos.puede_crear', content_type=tipo)
+    permiso_eliminar = Permission.objects.create(name='casos.puede_eliminar', codename='casos.puede_eliminar', content_type=tipo)
+    permiso_editar = Permission.objects.create(name='casos.puede_editar', codename='casos.puede_editar', content_type=tipo)
+    permiso_validar = Permission.objects.create(name='casos.puede_validar', codename='casos.puede_validar', content_type=tipo)
 
     grupo.permissions.add(permiso_listar)
     grupo.permissions.add(permiso_crear)
