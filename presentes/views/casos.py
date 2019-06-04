@@ -60,7 +60,9 @@ class CasoViewSet(viewsets.ModelViewSet):
                 "latitud": c.latitud,
                 "longitud": c.longitud,
                 "categoria": c.categoria.nombre,
-                "coordenadas": f"[{c.latitud}, {c.longitud}]"
+                "coordenadas": f"[{c.latitud}, {c.longitud}]",
+                "copete": c.copete,
+                "link_de_nota": c.link_de_nota
             } for c in casos
         ]
 
@@ -81,7 +83,9 @@ class CasoViewSet(viewsets.ModelViewSet):
                 "latitud": c.latitud,
                 "longitud": c.longitud,
                 "categoria": c.categoria.nombre,
-                "coordenadas": f"[{c.latitud}, {c.longitud}]"
+                "coordenadas": f"[{c.latitud}, {c.longitud}]",
+                "copete": c.copete,
+                "link_de_nota": c.link_de_nota
             } for c in casos
         ]
 

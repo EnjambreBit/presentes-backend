@@ -98,6 +98,8 @@ class Caso(models.Model):
     nombre_de_quien_brindo_informacion = models.CharField(max_length=200,null=True, default="", blank=True, help_text="")
     telefono_de_quien_brindo_informacion = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
 
+    link_de_nota = models.CharField(max_length=250, null=True, default="", blank=True, help_text="")
+    copete = models.TextField(default="", null=True, blank=True, help_text="")
 
 
     fecha_de_creacion = models.DateField(default=datetime.date.today)

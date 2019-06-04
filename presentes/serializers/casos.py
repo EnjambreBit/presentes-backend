@@ -76,6 +76,8 @@ class CasoSerializer(serializers.ModelSerializer):
             'nombre_de_quien_brindo_informacion',
             'telefono_de_quien_brindo_informacion',
             'estado_de_publicacion',
+            'link_de_nota',
+            'copete'
         ]
 
     included_serializers = {
