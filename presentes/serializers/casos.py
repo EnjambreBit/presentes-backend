@@ -49,6 +49,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'nombre_del_penal',
             'localidad_del_penal',
             'provincia_del_penal',
+            'prostitucion',
             'es_migrante',
             'pais_de_origen',
             'anio_de_llegada',

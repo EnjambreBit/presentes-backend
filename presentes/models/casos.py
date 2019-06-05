@@ -26,7 +26,13 @@ class Caso(models.Model):
     apellido = models.CharField(max_length=200, default="", help_text="")
     lugar_de_nacimiento = models.CharField(max_length=255, default="", blank=True, null=True, help_text="")
     edad = models.CharField(max_length=3, default="", blank=True, null=True, help_text="")
+    prostitucion = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
+    #Es migrante
+    es_migrante =  models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
+
+    pais_de_origen = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
+    anio_de_llegada = models.CharField(max_length=4, default="",null=True, blank=True, help_text="")
 
     #Datos del hecho
     fecha_del_hecho = models.DateField(default=datetime.date.today)
@@ -58,13 +64,6 @@ class Caso(models.Model):
     nombre_del_penal = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     localidad_del_penal = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     provincia_del_penal = models.ForeignKey('Provincia', related_name="casos_penal", default=None, blank=True, null=True, on_delete=models.CASCADE)
-
-
-    #Es migrante
-    es_migrante =  models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
-
-    pais_de_origen = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
-    anio_de_llegada = models.CharField(max_length=4, default="",null=True, blank=True, help_text="")
 
     #Denuncia
     hay_denuncia = models.CharField(max_length=2, choices=OPCIONES_SI_NO_NOSABE, default=None, null=True, blank=True)
