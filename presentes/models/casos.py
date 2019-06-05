@@ -8,10 +8,11 @@ class Caso(models.Model):
     SI = "SI"
     NO = "NO"
     NOSABE = "NS"
-    OPCIONES_SI_NO_NOSABE = (
+    OPCIONES_DENUNCIA = (
         (SI, 'Si'),
         (NO, 'No'),
         (NOSABE, 'No sabe'),
+        ('NT', 'No se la tomaron')
     )
     OPCIONES_SI_NO = (
         (SI, 'Si'),
@@ -58,7 +59,7 @@ class Caso(models.Model):
     donde_vivia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
 
     #Situación de encierro
-    # desde_cuando_estaba_detenida
+    estaba_detenida = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     tenia_prision_preventiva = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     titulo_de_la_causa_en_la_justicia = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     nombre_del_penal = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
@@ -66,14 +67,14 @@ class Caso(models.Model):
     provincia_del_penal = models.ForeignKey('Provincia', related_name="casos_penal", default=None, blank=True, null=True, on_delete=models.CASCADE)
 
     #Denuncia
-    hay_denuncia = models.CharField(max_length=2, choices=OPCIONES_SI_NO_NOSABE, default=None, null=True, blank=True)
+    hay_denuncia = models.CharField(max_length=2, choices=OPCIONES_DENUNCIA, default=None, null=True, blank=True)
     fecha_de_denuncia = models.DateField(default=datetime.date.today, null=True, blank=True)
     ante_quien_se_hizo_la_denuncia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
     por_que_no_denuncio = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     la_denuncia_reconoce_genero = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
     #Causa judicial
-    hay_causa_judicial = models.CharField(max_length=2, choices=OPCIONES_SI_NO_NOSABE, default=None, null=True, blank=True)
+    hay_causa_judicial = models.CharField(max_length=2, choices=OPCIONES_DENUNCIA, default=None, null=True, blank=True)
     cj_titulo_de_la_causa = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     cj_numero_de_la_causa = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     cj_anio_de_inicio = models.CharField(max_length=4, default="", null=True, blank=True, help_text="")
@@ -92,6 +93,12 @@ class Caso(models.Model):
     violencia_institucion_provincia = models.ForeignKey('Provincia', related_name="casos_violencia_institucional", default=None, blank=True, null=True, on_delete=models.CASCADE)
 
     observaciones = models.TextField(default="",null=True, blank=True, help_text="")
+
+    #Ataques a lugares
+    calle = models.CharField(max_length=250,null=True, default="", blank=True, help_text="")
+    como_fue_el_ataque = models.TextField(default="",null=True, blank=True, help_text="")
+    hubo_victimas = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
+    hay_registro_fotografico = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
     #La informacion del formulario fue brindada por
     nombre_de_quien_brindo_informacion = models.CharField(max_length=200,null=True, default="", blank=True, help_text="")

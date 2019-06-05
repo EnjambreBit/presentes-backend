@@ -44,6 +44,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'estudios_cursados',
             'estaba_en_situacion_de_calle',
             'donde_vivia',
+            'estaba_detenida',
             'tenia_prision_preventiva',
             'titulo_de_la_causa_en_la_justicia',
             'nombre_del_penal',
@@ -78,7 +79,11 @@ class CasoSerializer(serializers.ModelSerializer):
             'telefono_de_quien_brindo_informacion',
             'estado_de_publicacion',
             'link_de_nota',
-            'copete'
+            'copete',
+            'calle',
+            'como_fue_el_ataque',
+            'hubo_victimas',
+            'hay_registro_fotografico'
         ]
 
     included_serializers = {
