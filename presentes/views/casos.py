@@ -54,15 +54,21 @@ class CasoViewSet(viewsets.ModelViewSet):
                 "id": c.id,
                 "nombre": c.nombre,
                 "apellido": c.apellido,
+                "nombreCompleto": f"{c.nombre} {c.apellido}",
                 "localidad": c.localidad,
                 "provincia": c.provincia.nombre,
-                "fecha": c.fecha_del_hecho,
+                "fechaDelHecho": c.fecha_del_hecho,
                 "latitud": c.latitud,
                 "longitud": c.longitud,
                 "categoria": c.categoria.nombre,
                 "coordenadas": f"[{c.latitud}, {c.longitud}]",
                 "copete": c.copete,
-                "link_de_nota": c.link_de_nota
+                "linkDeNota": c.link_de_nota,
+                "dondeVivia": c.donde_vivia,
+                "paisDeOrigen": c.pais_de_origen,
+                "causaDeLaMuerte": c.causa_de_la_muerte,
+                "edad": c.edad,
+                "lugarDeNacimiento": c.lugar_de_nacimiento
             } for c in casos
         ]
 
@@ -77,15 +83,21 @@ class CasoViewSet(viewsets.ModelViewSet):
                 "id": c.id,
                 "nombre": c.nombre,
                 "apellido": c.apellido,
+                "nombreCompleto": f"{c.nombre} {c.apellido}",
                 "localidad": c.localidad,
                 "provincia": c.provincia.nombre,
-                "fecha": c.fecha_del_hecho,
+                "fechaDelHecho": c.fecha_del_hecho,
                 "latitud": c.latitud,
                 "longitud": c.longitud,
                 "categoria": c.categoria.nombre,
                 "coordenadas": f"[{c.latitud}, {c.longitud}]",
                 "copete": c.copete,
-                "link_de_nota": c.link_de_nota
+                "linkDeNota": c.link_de_nota,
+                "dondeVivia": c.donde_vivia,
+                "paisDeOrigen": c.pais_de_origen,
+                "causaDeLaMuerte": c.causa_de_la_muerte,
+                "edad": c.edad,
+                "lugarDeNacimiento": c.lugar_de_nacimiento
             } for c in casos
         ]
 
