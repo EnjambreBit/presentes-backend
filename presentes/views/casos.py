@@ -10,6 +10,10 @@ from rest_framework import permissions
 from django.db import IntegrityError
 from django.db.models import Q
 
+from presentes.models.provincias import Provincia
+from presentes.models.estados_de_caso import EstadoDeCaso
+from presentes.models.categorias import Categoria
+
 class CasoViewSet(viewsets.ModelViewSet):
     queryset = Caso.objects.all()
     resource_name = 'casos'
@@ -17,15 +21,18 @@ class CasoViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     serializer_class = CasoSerializer
-    search_fields = ['nombre']
-    filterset_fields = ['nombre']
+    search_fields = []
+    filterset_fields = []
 
     def get_queryset(self):
         queryset = self.queryset
         query = self.request.query_params.get('query', None)
         nombre = self.request.query_params.get('nombre', None)
         apellido = self.request.query_params.get('apellido', None)
-        localidad = self.request.query_params.get('apellido', None)
+        localidad = self.request.query_params.get('localidad', None)
+        provincia = self.request.query_params.get('provincia', '')
+        estadoDePublicacion = self.request.query_params.get('estadoDePublicacion', '')
+        categoria = self.request.query_params.get('categoria', '')
 
         ordenamiento = self.request.query_params.get('ordenamiento', '')
 
@@ -36,10 +43,22 @@ class CasoViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(Q(nombre__icontains=query) | Q(apellido__icontains=query))
 
         if nombre:
-            queryset = queryset.filter(nombre__icontains=nombre)
+            queryset = queryset.filter(Q(nombre__icontains=query) | Q(apellido__icontains=query))
 
-        if apellido:
-            queryset = queryset.filter(apellido__icontains=apellido)
+        if localidad:
+            queryset = queryset.filter(localidad__icontains=localidad)
+
+        if provincia:
+            provinciaComoObjeto = Provincia.objects.get(nombre=provincia)
+            queryset = queryset.filter(provincia__in=[provinciaComoObjeto.id])
+
+        if estadoDePublicacion:
+            estadoComoObjeto = EstadoDeCaso.objects.get(nombre=estadoDePublicacion)
+            queryset = queryset.filter(estado_de_publicacion__in=[estadoComoObjeto.id])
+
+        if categoria:
+            categoriaComoObjeto = Categoria.objects.get(nombre=categoria)
+            queryset = queryset.filter(categoria__in=[categoriaComoObjeto.id])
 
         queryset = queryset.distinct()
 
