@@ -17,6 +17,14 @@ class CasoSerializer(serializers.ModelSerializer):
     etiquetas = ResourceRelatedField(many=True, read_only=True)
     cj_organizaciones = ResourceRelatedField(many=True, read_only=True)
     estado_de_publicacion = ResourceRelatedField(queryset=EstadoDeCaso.objects, many=False, read_only=False)
+    imagen_url = serializers.SerializerMethodField()
+
+    def get_imagen_url(self, object):
+        if object.imagen:
+            request = self.context.get('request')
+            return request.build_absolute_uri(object.imagen.url)
+        else:
+            return None
 
     class Meta:
         model = Caso
@@ -83,7 +91,8 @@ class CasoSerializer(serializers.ModelSerializer):
             'calle',
             'como_fue_el_ataque',
             'hubo_victimas',
-            'hay_registro_fotografico'
+            'hay_registro_fotografico',
+            'imagen_url',
         ]
 
     included_serializers = {

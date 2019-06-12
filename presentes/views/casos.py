@@ -9,6 +9,9 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from django.db import IntegrityError
 from django.db.models import Q
+import base64
+from django.core.files.base import ContentFile
+import urllib
 
 from presentes.models.provincias import Provincia
 from presentes.models.estados_de_caso import EstadoDeCaso
@@ -73,6 +76,7 @@ class CasoViewSet(viewsets.ModelViewSet):
                 "id": c.id,
                 "nombre": c.nombre,
                 "apellido": c.apellido,
+                "imagen_url": c.imagen_url,
                 "nombreCompleto": f"{c.nombre} {c.apellido}",
                 "calle": c.calle,
                 "localidad": c.localidad,
@@ -98,31 +102,75 @@ class CasoViewSet(viewsets.ModelViewSet):
     def obtener_casos_publicos(self, request, *args, **kwargs):
         casos = Caso.objects.filter(estado_de_publicacion__nombre="Público")
 
-        data = [
-            {
-                "id": c.id,
-                "nombre": c.nombre,
-                "apellido": c.apellido,
-                "nombreCompleto": f"{c.nombre} {c.apellido}",
-                "calle": c.calle,
-                "localidad": c.localidad,
-                "provincia": c.provincia.nombre,
-                "fechaDelHecho": c.fecha_del_hecho,
-                "latitud": c.latitud,
-                "longitud": c.longitud,
-                "categoria": c.categoria.nombre,
-                "coordenadas": f"[{c.latitud}, {c.longitud}]",
-                "copete": c.copete,
-                "linkDeNota": c.link_de_nota,
-                "dondeVivia": c.donde_vivia,
-                "paisDeOrigen": c.pais_de_origen,
-                "causaDeLaMuerte": c.causa_de_la_muerte,
-                "edad": c.edad,
-                "lugarDeNacimiento": c.lugar_de_nacimiento
-            } for c in casos
-        ]
+        data = []
+        for c in casos:
+            datos = {}
+            datos.update({"id": c.id})
+            datos.update({"nombre": c.nombre})
+            datos.update({"apellido": c.apellido})
+            datos.update({"nombreCompleto": f"{c.nombre} {c.apellido}"})
+            datos.update({"calle": c.calle})
+            datos.update({"localidad": c.localidad})
+            datos.update({"provincia": c.provincia.nombre})
+            datos.update({"fechaDelHecho": c.fecha_del_hecho})
+            datos.update({"latitud": c.latitud})
+            datos.update({"longitud": c.longitud})
+            datos.update({"categoria": c.categoria.nombre})
+            datos.update({"coordenadas": f"[{c.latitud}, {c.longitud}]"})
+            datos.update({"copete": c.copete})
+            datos.update({"linkDeNota": c.link_de_nota})
+            datos.update({"dondeVivia": c.donde_vivia})
+            datos.update({"paisDeOrigen": c.pais_de_origen})
+            datos.update({"causaDeLaMuerte": c.causa_de_la_muerte})
+            datos.update({"edad": c.edad})
+            datos.update({"lugarDeNacimiento": c.lugar_de_nacimiento})
+            if c.imagen:
+                imagen_url = request.build_absolute_uri(c.imagen.url)
+            else:
+                imagen_url = None
+            datos.update({"imagen_url": imagen_url})
 
+            data.append(datos)
+        # data = [
+        #     {
+        #         "id": c.id,
+        #         "nombre": c.nombre,
+        #         "apellido": c.apellido,
+        #         "nombreCompleto": f"{c.nombre} {c.apellido}",
+        #         "calle": c.calle,
+        #         "localidad": c.localidad,
+        #         "provincia": c.provincia.nombre,
+        #         "fechaDelHecho": c.fecha_del_hecho,
+        #         "latitud": c.latitud,
+        #         "longitud": c.longitud,
+        #         "categoria": c.categoria.nombre,
+        #         "coordenadas": f"[{c.latitud}, {c.longitud}]",
+        #         "copete": c.copete,
+        #         "linkDeNota": c.link_de_nota,
+        #         "dondeVivia": c.donde_vivia,
+        #         "paisDeOrigen": c.pais_de_origen,
+        #         "causaDeLaMuerte": c.causa_de_la_muerte,
+        #         "edad": c.edad,
+        #         "lugarDeNacimiento": c.lugar_de_nacimiento
+        #     } for c in casos
+        # ]
         return Response(data)
 
     def create(self, request, *args, **kwargs):
         return super(CasoViewSet, self).create(request, *args, **kwargs)
+
+    @action(detail=False, permission_classes=[permissions.IsAuthenticated], methods=['post'], url_path='cambiar-imagen')
+    def cambiar_avatar(self, request, *args, **kwargs):
+        datos = json.loads(request.body)
+        contenido = datos['contenido']
+        nombre = datos['nombre']
+        caso_id = datos.get('caso_id', False)
+        caso = Caso.objects.get(id=caso_id)
+        if 'data:' in contenido and ';base64,' in contenido:
+            header, data = contenido.split(';base64,')
+            decoded_file = base64.b64decode(data)
+            content_file = ContentFile(decoded_file)
+            caso.imagen.save(nombre, content_file, save=False)
+            caso.save()
+
+        return Response({ "ok": True, 'imagen_url': request.build_absolute_uri(caso.imagen.url) })

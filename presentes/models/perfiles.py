@@ -10,6 +10,7 @@ class Perfil(models.Model):
     apellido = models.CharField(max_length=200, default="", help_text="")
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
     grupos = models.ManyToManyField(Group, related_name="perfiles", default=None, blank=True)
+    imagen = models.ImageField(default=None, null=True, blank=True)
 
     class Meta:
         ordering = ['-id']
@@ -63,5 +64,8 @@ class Perfil(models.Model):
             "id": perfil.id,
             "nombreCompleto": perfil.nombre_completo(),
         }
+
+        if perfil.imagen:
+            datos['imagenUrl'] = build_absolute_uri(perfil.imagen.url)
 
         return datos

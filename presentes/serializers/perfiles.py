@@ -11,6 +11,14 @@ class GroupSerializer(serializers.ModelSerializer):
 class PerfilSerializer(serializers.ModelSerializer):
 
     grupos = GroupSerializer(many=True, read_only=True)
+    imagen_url = serializers.SerializerMethodField()
+
+    def get_imagen_url(self, object):
+        if object.imagen:
+            request = self.context.get('request')
+            return request.build_absolute_uri(object.imagen.url)
+        else:
+            return None
 
     class Meta:
         model = Perfil
@@ -20,7 +28,8 @@ class PerfilSerializer(serializers.ModelSerializer):
             'apellido',
             'email',
             'usuario',
-            'grupos'
+            'grupos',
+            'imagen_url'
         )
 
     class JSONAPIMeta:

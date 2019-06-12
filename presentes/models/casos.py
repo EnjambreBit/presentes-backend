@@ -25,6 +25,7 @@ class Caso(models.Model):
     #Datos de la víctima
     nombre = models.CharField(max_length=200, default="", help_text="")
     apellido = models.CharField(max_length=200, default="", help_text="")
+    imagen = models.ImageField(default=None, null=True, blank=True)
     lugar_de_nacimiento = models.CharField(max_length=255, default="", blank=True, null=True, help_text="")
     edad = models.CharField(max_length=3, default="", blank=True, null=True, help_text="")
     prostitucion = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
@@ -125,9 +126,24 @@ class Caso(models.Model):
     def _aplicar_provincia(self, nombre):
         self.provincia = Provincia.objects.get(nombre=nombre)
 
+    def nombre_completo(self):
+        return "{} {}".format(self.nombre, self.apellido)
+
     @classmethod
     def post_create(cls, sender, instance, created, *args, **kwargs):
         if created:
             instance.save()
+
+    @classmethod
+    def serializar_personalizado(kls, caso, build_absolute_uri):
+        datos = {
+            "id": caso.id,
+            "nombreCompleto": caso.nombre_completo(),
+        }
+
+        if caso.imagen:
+            datos['imagenUrl'] = build_absolute_uri(caso.imagen.url)
+
+        return datos
 
 post_save.connect(Caso.post_create, sender=Caso)

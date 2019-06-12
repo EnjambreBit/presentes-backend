@@ -53,6 +53,10 @@ class PerfilViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path='mi-perfil')
     def mi_perfil(self, request, *args, **kwargs):
         perfil = Perfil.objects.get(user=request.user)
+        if perfil.imagen:
+            imagen_url = request.build_absolute_uri(perfil.imagen.url)
+        else:
+            imagen_url = None
 
         data = {
             'id': perfil.id,
@@ -60,6 +64,7 @@ class PerfilViewSet(viewsets.ModelViewSet):
             'apellido': perfil.apellido,
             'email': perfil.email(),
             'usuario': perfil.user.username,
+            'imagen_url': imagen_url,
             'version_del_servidor': VERSION_NUMBER,
             'permisos': perfil.obtener_diccionario_de_permisos(),
         }
