@@ -24,7 +24,7 @@ class Caso(models.Model):
     )
     #Datos de la víctima
     nombre = models.CharField(max_length=200, default="", help_text="")
-    apellido = models.CharField(max_length=200, default="", help_text="")
+    apellido = models.CharField(max_length=200, null=True, blank=True, default="", help_text="")
     imagen = models.ImageField(default=None, null=True, blank=True)
     lugar_de_nacimiento = models.CharField(max_length=255, default="", blank=True, null=True, help_text="")
     edad = models.CharField(max_length=3, default="", blank=True, null=True, help_text="")
@@ -40,8 +40,8 @@ class Caso(models.Model):
     fecha_del_hecho = models.DateField(default=datetime.date.today)
     localidad = models.CharField(max_length=200, default="", help_text="")
     provincia = models.ForeignKey('Provincia', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
-    latitud = models.CharField(max_length=20, default="", help_text="")
-    longitud = models.CharField(max_length=20, default="", help_text="")
+    latitud = models.CharField(max_length=20,blank=True, null=True, default="", help_text="")
+    longitud = models.CharField(max_length=20,blank=True, null=True, default="", help_text="")
 
     categoria = models.ForeignKey('Categoria', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
     etiquetas = models.ManyToManyField('Etiqueta', related_name="casos", default=None, blank=True)
