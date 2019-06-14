@@ -85,6 +85,7 @@ class Caso(models.Model):
     cj_respetaron_nombre_de_ig = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     cj_organismos_publicos = models.TextField(default="", null=True, blank=True, help_text="")
     cj_organizaciones = models.ManyToManyField('Organizacion', related_name="casos", default=None, blank=True)
+    cj_otrasOrganizaciones = models.TextField(default="", null=True, blank=True, help_text="")
     cj_cuenta_con_defensa = models.CharField(max_length=2, choices=OPCIONES_PUBLICA_PRIVADA, default=None, null=True, blank=True)
     cj_hay_informe_forense = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 

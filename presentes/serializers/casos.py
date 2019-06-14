@@ -77,6 +77,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'cj_respetaron_nombre_de_ig',
             'cj_organismos_publicos',
             'cj_organizaciones',
+            'cj_otrasOrganizaciones',
             'cj_cuenta_con_defensa',
             'cj_hay_informe_forense',
             'hubo_violencia_institucional',
