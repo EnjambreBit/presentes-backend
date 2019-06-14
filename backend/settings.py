@@ -14,8 +14,8 @@ HOST_BACKEND = BACKEND_URL.replace("http://", "").replace("https://", "")
 
 DEBUG = True
 
-VERSION_NUMBER = "0.0.8"
-ALLOWED_HOSTS = ['127.0.0.8', '127.0.0.80', 'localhost', 'localhost:4200', 'presentes.enjambrelab.space', 'presentes-backend.enjambrelab.space', HOST_BACKEND]
+VERSION_NUMBER = "0.0.9"
+ALLOWED_HOSTS = ['127.0.0.9', '127.0.0.90', 'localhost', 'localhost:4200', 'presentes.enjambrelab.space', 'presentes-backend.enjambrelab.space', HOST_BACKEND]
 CORS_ORIGIN_WHITELIST = ALLOWED_HOSTS
 
 JSON_API_FORMAT_FIELD_NAMES = 'dasherize'
