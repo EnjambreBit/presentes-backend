@@ -16,6 +16,7 @@ import urllib
 from presentes.models.provincias import Provincia
 from presentes.models.estados_de_caso import EstadoDeCaso
 from presentes.models.categorias import Categoria
+from presentes.models.etiquetas import Etiqueta
 
 class CasoViewSet(viewsets.ModelViewSet):
     queryset = Caso.objects.all()
@@ -36,6 +37,7 @@ class CasoViewSet(viewsets.ModelViewSet):
         provincia = self.request.query_params.get('provincia', '')
         estadoDePublicacion = self.request.query_params.get('estadoDePublicacion', '')
         categoria = self.request.query_params.get('categoria', '')
+        etiqueta = self.request.query_params.get('etiqueta', '')
 
         ordenamiento = self.request.query_params.get('ordenamiento', '')
 
@@ -62,6 +64,10 @@ class CasoViewSet(viewsets.ModelViewSet):
         if categoria:
             categoriaComoObjeto = Categoria.objects.get(nombre=categoria)
             queryset = queryset.filter(categoria__in=[categoriaComoObjeto.id])
+
+        if etiqueta:
+            etiquetaComoObjeto = Etiqueta.objects.get(nombre=etiqueta)
+            queryset = queryset.filter(etiquetas__in=[etiquetaComoObjeto.id])
 
         queryset = queryset.distinct()
 

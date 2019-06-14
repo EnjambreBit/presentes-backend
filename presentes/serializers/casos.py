@@ -14,8 +14,8 @@ class CasoSerializer(serializers.ModelSerializer):
     provincia_del_penal = ResourceRelatedField(queryset=Provincia.objects,many=False, read_only=False, allow_null=True, required=False)
     violencia_institucion_provincia = ResourceRelatedField(queryset=Provincia.objects,many=False, read_only=False, allow_null=True, required=False)
     categoria = ResourceRelatedField(queryset=Categoria.objects, many=False, read_only=False)
-    etiquetas = ResourceRelatedField(many=True, read_only=True)
-    cj_organizaciones = ResourceRelatedField(many=True, read_only=True)
+    etiquetas = ResourceRelatedField(queryset=Etiqueta.objects, many=True, read_only=False)
+    cj_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False)
     estado_de_publicacion = ResourceRelatedField(queryset=EstadoDeCaso.objects, many=False, read_only=False)
     imagen_url = serializers.SerializerMethodField()
 
