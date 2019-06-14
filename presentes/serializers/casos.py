@@ -53,6 +53,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'estaba_en_situacion_de_calle',
             'donde_vivia',
             'estaba_detenida',
+            'desde_cuando_estaba_encerrada',
             'tenia_prision_preventiva',
             'titulo_de_la_causa_en_la_justicia',
             'nombre_del_penal',

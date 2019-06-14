@@ -63,6 +63,7 @@ class Caso(models.Model):
     estaba_detenida = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     tenia_prision_preventiva = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     titulo_de_la_causa_en_la_justicia = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
+    desde_cuando_estaba_encerrada = models.CharField(max_length=4, default="", null=True, blank=True, help_text="")
     nombre_del_penal = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     localidad_del_penal = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     provincia_del_penal = models.ForeignKey('Provincia', related_name="casos_penal", default=None, blank=True, null=True, on_delete=models.CASCADE)
