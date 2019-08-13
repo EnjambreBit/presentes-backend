@@ -14,8 +14,9 @@ class CasoSerializer(serializers.ModelSerializer):
     provincia_del_penal = ResourceRelatedField(queryset=Provincia.objects,many=False, read_only=False, allow_null=True, required=False)
     violencia_institucion_provincia = ResourceRelatedField(queryset=Provincia.objects,many=False, read_only=False, allow_null=True, required=False)
     categoria = ResourceRelatedField(queryset=Categoria.objects, many=False, read_only=False)
-    etiquetas = ResourceRelatedField(queryset=Etiqueta.objects, many=True, read_only=False)
-    cj_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False)
+    etiquetas = ResourceRelatedField(queryset=Etiqueta.objects, many=True, read_only=False, allow_null=True, required=False)
+    cj_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False, allow_null=True, required=False)
+    denuncia_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False, allow_null=True, required=False)
     estado_de_publicacion = ResourceRelatedField(queryset=EstadoDeCaso.objects, many=False, read_only=False)
     imagen_url = serializers.SerializerMethodField()
 
@@ -43,6 +44,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'longitud',
             'categoria',
             'etiquetas',
+            'descripcion_del_hecho',
             'causa_de_la_muerte',
             'tenia_obra_social',
             'obra_social',
@@ -68,6 +70,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'ante_quien_se_hizo_la_denuncia',
             'por_que_no_denuncio',
             'la_denuncia_reconoce_genero',
+            'denuncia_organizaciones',
             'hay_causa_judicial',
             'cj_titulo_de_la_causa',
             'cj_numero_de_la_causa',
@@ -104,7 +107,8 @@ class CasoSerializer(serializers.ModelSerializer):
         'violencia_institucion_provincia': 'presentes.serializers.provincias.ProvinciaSerializer',
         'categoria': 'presentes.serializers.categorias.CategoriaSerializer',
         'estado_de_publicacion': 'presentes.serializers.estados_de_caso.EstadoDeCasoSerializer',
-        'cj_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer'
+        'cj_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
+        'denuncia_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer'
     }
 
     class JSONAPIMeta:
@@ -115,5 +119,6 @@ class CasoSerializer(serializers.ModelSerializer):
             'provincia_del_penal',
             'violencia_institucion_provincia',
             'cj_organizaciones'
+            'denuncia_organizaciones',
             'estado_de_publicacion'
         ]
