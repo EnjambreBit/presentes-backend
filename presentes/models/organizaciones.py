@@ -10,6 +10,13 @@ class Organizacion(models.Model):
     descripcion = models.TextField(default="", help_text="")
     provincia = models.ForeignKey('Provincia', related_name="organizaciones", default=None, null=True, on_delete=models.CASCADE)
 
+    website = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)
+    facebook = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)
+    twitter = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)
+    instagram = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)
+    youtube = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)
+
+
     class Meta:
         ordering = ['-id']
         db_table = 'organizaciones'

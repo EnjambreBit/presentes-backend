@@ -19,7 +19,12 @@ class OrganizacionSerializer(serializers.ModelSerializer):
             'email',
             'descripcion',
             'localidad',
-            'provincia'
+            'provincia',
+            'website',
+            'facebook',
+            'twitter',
+            'instagram',
+            'youtube'
         )
 
     included_serializers = {
