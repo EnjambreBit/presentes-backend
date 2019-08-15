@@ -76,31 +76,36 @@ class CasoViewSet(viewsets.ModelViewSet):
     @action(detail=False, permission_classes=[permissions.AllowAny], methods=['get'], url_path='obtener-casos')
     def obtener_casos(self, request, *args, **kwargs):
         casos = Caso.objects.all()
+        
+        data = []
+        for c in casos:
+            datos = {}
+            datos.update({"id": c.id})
+            datos.update({"nombre": c.nombre})
+            datos.update({"apellido": c.apellido})
+            datos.update({"nombreCompleto": f"{c.nombre} {c.apellido}"})
+            datos.update({"calle": c.calle})
+            datos.update({"localidad": c.localidad})
+            datos.update({"provincia": c.provincia.nombre})
+            datos.update({"fechaDelHecho": c.fecha_del_hecho})
+            datos.update({"latitud": c.latitud})
+            datos.update({"longitud": c.longitud})
+            datos.update({"categoria": c.categoria.nombre})
+            datos.update({"coordenadas": f"[{c.latitud}, {c.longitud}]"})
+            datos.update({"copete": c.copete})
+            datos.update({"linkDeNota": c.link_de_nota})
+            datos.update({"dondeVivia": c.donde_vivia})
+            datos.update({"paisDeOrigen": c.pais_de_origen})
+            datos.update({"causaDeLaMuerte": c.causa_de_la_muerte})
+            datos.update({"edad": c.edad})
+            datos.update({"lugarDeNacimiento": c.lugar_de_nacimiento})
+            if c.imagen:
+                imagen_url = request.build_absolute_uri(c.imagen.url)
+            else:
+                imagen_url = None
+            datos.update({"imagen_url": imagen_url})
 
-        data = [
-            {
-                "id": c.id,
-                "nombre": c.nombre,
-                "apellido": c.apellido,
-                "imagen_url": c.imagen_url,
-                "nombreCompleto": f"{c.nombre} {c.apellido}",
-                "calle": c.calle,
-                "localidad": c.localidad,
-                "provincia": c.provincia.nombre,
-                "fechaDelHecho": c.fecha_del_hecho,
-                "latitud": c.latitud,
-                "longitud": c.longitud,
-                "categoria": c.categoria.nombre,
-                "coordenadas": f"[{c.latitud}, {c.longitud}]",
-                "copete": c.copete,
-                "linkDeNota": c.link_de_nota,
-                "dondeVivia": c.donde_vivia,
-                "paisDeOrigen": c.pais_de_origen,
-                "causaDeLaMuerte": c.causa_de_la_muerte,
-                "edad": c.edad,
-                "lugarDeNacimiento": c.lugar_de_nacimiento
-            } for c in casos
-        ]
+            data.append(datos)
 
         return Response(data)
 
