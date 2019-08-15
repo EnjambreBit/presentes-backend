@@ -73,10 +73,20 @@ class CasoViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-    @action(detail=False, permission_classes=[permissions.AllowAny], methods=['get'], url_path='obtener-casos')
+    @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='lista-de-casos-publicos')
+    def lista_de_casos_publicos(self, request, *args, **kwargs):
+
+        queryset = self.queryset
+        queryset = queryset.filter(estado_de_publicacion__nombre="Público")
+
+        return queryset
+
+
+
+    @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos')
     def obtener_casos(self, request, *args, **kwargs):
         casos = Caso.objects.all()
-        
+
         data = []
         for c in casos:
             datos = {}
