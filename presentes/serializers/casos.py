@@ -5,6 +5,7 @@ from presentes.models.categorias import Categoria
 from presentes.models.etiquetas import Etiqueta
 from presentes.models.organizaciones import Organizacion
 from presentes.models.estados_de_caso import EstadoDeCaso
+from presentes.models.estudios import Estudio
 from rest_framework_json_api.relations import ResourceRelatedField
 
 
@@ -18,6 +19,7 @@ class CasoSerializer(serializers.ModelSerializer):
     cj_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False, allow_null=True, required=False)
     denuncia_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False, allow_null=True, required=False)
     estado_de_publicacion = ResourceRelatedField(queryset=EstadoDeCaso.objects, many=False, read_only=False)
+    que_estudios_tiene = ResourceRelatedField(queryset=Estudio.objects, many=False, read_only=False, allow_null=True, required=False)
     imagen_url = serializers.SerializerMethodField()
 
     def get_imagen_url(self, object):
@@ -52,6 +54,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'prestaciones_de_salud',
             'ocupacion',
             'estudios_cursados',
+            'que_estudios_tiene',
             'estaba_en_situacion_de_calle',
             'donde_vivia',
             'estaba_detenida',
@@ -108,7 +111,8 @@ class CasoSerializer(serializers.ModelSerializer):
         'categoria': 'presentes.serializers.categorias.CategoriaSerializer',
         'estado_de_publicacion': 'presentes.serializers.estados_de_caso.EstadoDeCasoSerializer',
         'cj_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
-        'denuncia_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer'
+        'denuncia_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
+        'que_estudios_tiene': 'presentes.serializers.estudios.EstudioSerializer'
     }
 
     class JSONAPIMeta:
@@ -120,5 +124,6 @@ class CasoSerializer(serializers.ModelSerializer):
             'violencia_institucion_provincia',
             'cj_organizaciones'
             'denuncia_organizaciones',
-            'estado_de_publicacion'
+            'estado_de_publicacion',
+            'que_estudios_tiene'
         ]

@@ -63,6 +63,7 @@ class Caso(models.Model):
     #Travesticidio y Travesticidio social
     ocupacion = models.CharField(max_length=200, null=True,default="", blank=True, help_text="")
     estudios_cursados = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
+    que_estudios_tiene = models.ForeignKey('Estudio', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
     estaba_en_situacion_de_calle = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     donde_vivia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
 

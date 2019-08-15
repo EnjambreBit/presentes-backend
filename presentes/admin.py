@@ -12,6 +12,7 @@ from presentes.admin_classes.etiquetas import Etiqueta, EtiquetaAdmin
 from presentes.admin_classes.casos import Caso, CasoAdmin
 from presentes.admin_classes.estados_de_caso import EstadoDeCaso, EstadoDeCasoAdmin
 from presentes.admin_classes.archivos import Archivo, ArchivoAdmin
+from presentes.admin_classes.estudios import Estudio, EstudioAdmin
 
 class MyGroupAdminForm(forms.ModelForm):
     class Meta:
@@ -39,3 +40,4 @@ admin.site.register(Etiqueta, EtiquetaAdmin)
 admin.site.register(Caso, CasoAdmin)
 admin.site.register(EstadoDeCaso, EstadoDeCasoAdmin)
 admin.site.register(Archivo, ArchivoAdmin)
+admin.site.register(Estudio, EstudioAdmin)
