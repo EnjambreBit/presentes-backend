@@ -9,6 +9,8 @@ class Organizacion(models.Model):
     email = models.CharField(max_length=200, default="", help_text="", blank=True, null=True)
     descripcion = models.TextField(default="", help_text="")
     provincia = models.ForeignKey('Provincia', related_name="organizaciones", default=None, null=True, on_delete=models.CASCADE)
+    latitud = models.CharField(max_length=20,blank=True, null=True, default="", help_text="")
+    longitud = models.CharField(max_length=20,blank=True, null=True, default="", help_text="")
 
     website = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)
     facebook = models.CharField(max_length=255, default="", help_text="", blank=True, null=True)

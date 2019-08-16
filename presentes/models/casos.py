@@ -159,6 +159,7 @@ class Caso(models.Model):
 
     def serializar_para_lista(self):
         return {
+            "id": self.id,
             "fechaDelHecho": self.fecha_del_hecho,
             "nombreCompleto": f"{self.nombre} {self.apellido}",
             "estadoDePublicacion": self.estado_de_publicacion.nombre,

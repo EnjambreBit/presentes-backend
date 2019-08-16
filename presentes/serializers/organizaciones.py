@@ -20,6 +20,8 @@ class OrganizacionSerializer(serializers.ModelSerializer):
             'descripcion',
             'localidad',
             'provincia',
+            'latitud',
+            'longitud',
             'website',
             'facebook',
             'twitter',
