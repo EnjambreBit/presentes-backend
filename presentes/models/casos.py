@@ -157,4 +157,21 @@ class Caso(models.Model):
 
         return datos
 
+    def serializar_para_lista(self):
+        return {
+            "fechaDelHecho": self.fecha_del_hecho,
+            "nombreCompleto": f"{self.nombre} {self.apellido}",
+            "estadoDePublicacion": self.estado_de_publicacion.nombre,
+            "categoria": self.categoria.nombre,
+            "lugar": self.obtener_lugar_del_hecho_completo()
+        }
+
+    def obtener_lugar_del_hecho_completo(self):
+        if self.calle:
+            calle = self.calle + ", "
+        else:
+            calle = ""
+
+        return calle + self.localidad + ", " + self.provincia.nombre
+
 post_save.connect(Caso.post_create, sender=Caso)
