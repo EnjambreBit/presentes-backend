@@ -81,8 +81,6 @@ class CasoViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-
-
     @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos')
     def obtener_casos(self, request, *args, **kwargs):
         casos = Caso.objects.all()
@@ -131,18 +129,24 @@ class CasoViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super(CasoViewSet, self).create(request, *args, **kwargs)
 
-    @action(detail=False, permission_classes=[permissions.IsAuthenticated], methods=['post'], url_path='cambiar-imagen')
-    def cambiar_avatar(self, request, *args, **kwargs):
-        datos = json.loads(request.body)
-        contenido = datos['contenido']
-        nombre = datos['nombre']
-        caso_id = datos.get('caso_id', False)
-        caso = Caso.objects.get(id=caso_id)
-        if 'data:' in contenido and ';base64,' in contenido:
+    def perform_update(self, serializer):
+        return self.guardar_modelo_con_archivo(serializer)
+
+    def perform_create(self, serializer):
+        return self.guardar_modelo_con_archivo(serializer)
+
+    def guardar_modelo_con_archivo(self, serializer):
+        instancia = serializer.save()
+        imagen = self.request.data.get('imagen', None)
+
+        if imagen and isinstance(imagen, dict):
+            nombre = imagen.get('nombre')
+            contenido = imagen.get('contenido')
+
             header, data = contenido.split(';base64,')
             decoded_file = base64.b64decode(data)
             content_file = ContentFile(decoded_file)
-            caso.imagen.save(nombre, content_file, save=False)
-            caso.save()
+            instancia.imagen.save(nombre, content_file, save=False)
 
-        return Response({ "ok": True, 'imagen_url': request.build_absolute_uri(caso.imagen.url) })
+        instancia.save()
+        return instancia
