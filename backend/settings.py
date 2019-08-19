@@ -12,7 +12,7 @@ BACKEND_URL = os.environ.get('BACKEND_URL')
 
 HOST_BACKEND = BACKEND_URL.replace("http://", "").replace("https://", "")
 
-DEBUG = True
+DEBUG = False
 
 VERSION_NUMBER = "0.0.16"
 ALLOWED_HOSTS = ['127.0.0.16', '127.0.0.160', 'localhost', 'localhost:4200', 'presentes.enjambrelab.space', 'presentes-backend.enjambrelab.space', '127.0.0.1', 'mapa.agenciapresentes.org', HOST_BACKEND]
