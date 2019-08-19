@@ -63,7 +63,7 @@ class Caso(models.Model):
     #Travesticidio y Travesticidio social
     ocupacion = models.CharField(max_length=200, null=True,default="", blank=True, help_text="")
     estudios_cursados = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
-    que_estudios_tiene = models.ForeignKey('Estudio', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
+    que_estudios_tiene = models.ForeignKey('Estudio', related_name="casos", default=None, null=True, blank=True, on_delete=models.CASCADE)
     estaba_en_situacion_de_calle = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     donde_vivia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
 
@@ -164,7 +164,30 @@ class Caso(models.Model):
             "nombreCompleto": f"{self.nombre} {self.apellido}",
             "estadoDePublicacion": self.estado_de_publicacion.nombre,
             "categoria": self.categoria.nombre,
-            "lugar": self.obtener_lugar_del_hecho_completo()
+            "lugar": self.obtener_lugar_del_hecho_completo(),
+        }
+
+    def serializar_para_mapa(self):
+        return {
+            "id": self.id,
+            "fechaDelHecho": self.fecha_del_hecho,
+            "nombreCompleto": f"{self.nombre} {self.apellido}",
+            "estadoDePublicacion": self.estado_de_publicacion.nombre,
+            "categoria": self.categoria.nombre,
+            "calle": self.calle,
+            "localidad": self.localidad,
+            "provincia": self.provincia.nombre,
+            "latitud": self.latitud,
+            "longitud": self.longitud,
+            "lugar": self.obtener_lugar_del_hecho_completo(),
+            "coordenadas": f"[{self.latitud}, {self.longitud}]",
+            "copete": self.copete,
+            "linkDeNota": self.link_de_nota,
+            "dondeVivia": self.donde_vivia,
+            "paisDeOrigen": self.pais_de_origen,
+            "causaDeLaMuerte": self.causa_de_la_muerte,
+            "edad": self.edad,
+            "lugarDeNacimiento": self.lugar_de_nacimiento,
         }
 
     def obtener_lugar_del_hecho_completo(self):

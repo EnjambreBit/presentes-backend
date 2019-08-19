@@ -126,6 +126,13 @@ class CasoViewSet(viewsets.ModelViewSet):
           "filas": [c.serializar_para_lista() for c in casos]
         })
 
+    @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos-publicos-para-mapa')
+    def obtener_casos_publicos(self, request, *args, **kwargs):
+        casos = Caso.objects.filter(estado_de_publicacion__nombre="Público")
+
+        return Response([c.serializar_para_mapa() for c in casos]
+        )
+
     def create(self, request, *args, **kwargs):
         return super(CasoViewSet, self).create(request, *args, **kwargs)
 

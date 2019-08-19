@@ -33,7 +33,7 @@ comandos:
 	@echo "    ${G}cargar_datos${N}                       Carga el archivo .xls inicial."
 	@echo "    ${G}deploy${N}                             Realiza un deploy sobre dokku."
 	@echo ""
-	@echo "    ${G}realizar_backup_desde_produccion${N}   Incrementa la versión."
+	@echo "    ${G}realizar_backup_desde_produccion${N}   Realiza un dump de la base de datos de producción."
 	@echo "    ${G}cargar_ultimo_dump_localmente${N}      Carga el útimo backup."
 	@echo ""
 	@echo ""
@@ -94,9 +94,9 @@ monitor:
 
 realizar_backup_desde_produccion:
 	@echo "${G}Creando el archivo ${DB_NOMBRE_DEL_DUMP}${N}"
-	@ssh dokku@enjambrelab.space postgres:export presentes-backend > ${DB_NOMBRE_DEL_DUMP}
+	@ssh dokku@enjambrelab.space postgres:export presentes-db > ${DB_NOMBRE_DEL_DUMP}
 
 cargar_ultimo_dump_localmente:
 	@echo "${G}Se cargará el dump mas reciente: ${DB_DUMP_MAS_RECIENTE}${N}"
-	dropdb --if-exists presentes-db -e; createdb presentes-sb
+	dropdb --if-exists presentes-db -e; createdb presentes-db
 	pg_restore --no-acl --no-owner -d presentes-db ${DB_DUMP_MAS_RECIENTE}
