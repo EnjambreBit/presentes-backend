@@ -49,9 +49,12 @@ class Caso(models.Model):
     longitud = models.CharField(max_length=20,blank=True, null=True, default="", help_text="")
 
     categoria = models.ForeignKey('Categoria', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
-    etiquetas = models.ManyToManyField('Etiqueta', related_name="casos", default=None, blank=True, null=True)
+    etiquetas = models.ManyToManyField('Etiqueta', related_name="casos", default=None, blank=True)
 
     descripcion_del_hecho = models.TextField(default="", null=True, blank=True, help_text="")
+
+    #Si es ataque o asesinato
+    la_victima_conocia_al_victimario = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
     #Si es muerte
     #Travesticidio y transfemicidio
@@ -82,7 +85,7 @@ class Caso(models.Model):
     ante_quien_se_hizo_la_denuncia = models.CharField(max_length=200, default="",null=True, blank=True, help_text="")
     por_que_no_denuncio = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     la_denuncia_reconoce_genero = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
-    denuncia_organizaciones = models.ManyToManyField('Organizacion', related_name="casos_denuncia", default=None, blank=True, null=True)
+    denuncia_organizaciones = models.ManyToManyField('Organizacion', related_name="casos_denuncia", default=None, blank=True)
 
     #Causa judicial
     hay_causa_judicial = models.CharField(max_length=2, choices=OPCIONES_CAUSA_JUDICIAL, default=None, null=True, blank=True)
@@ -93,7 +96,7 @@ class Caso(models.Model):
     cj_instancia = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     cj_respetaron_nombre_de_ig = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
     cj_organismos_publicos = models.TextField(default="", null=True, blank=True, help_text="")
-    cj_organizaciones = models.ManyToManyField('Organizacion', related_name="casos", default=None, blank=True, null=True)
+    cj_organizaciones = models.ManyToManyField('Organizacion', related_name="casos", default=None, blank=True)
     cj_otrasOrganizaciones = models.TextField(default="", null=True, blank=True, help_text="")
     cj_cuenta_con_defensa = models.CharField(max_length=2, choices=OPCIONES_PUBLICA_PRIVADA, default=None, null=True, blank=True)
     cj_hay_informe_forense = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)

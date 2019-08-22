@@ -47,6 +47,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'categoria',
             'etiquetas',
             'descripcion_del_hecho',
+            'la_victima_conocia_al_victimario',
             'causa_de_la_muerte',
             'tenia_obra_social',
             'obra_social',
