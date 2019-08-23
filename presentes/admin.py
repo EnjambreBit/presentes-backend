@@ -16,6 +16,7 @@ from presentes.admin_classes.estudios import Estudio, EstudioAdmin
 from presentes.admin_classes.lugares_del_hecho import LugarDelHecho, LugarDelHechoAdmin
 from presentes.admin_classes.espacios_privados import EspacioPrivado, EspacioPrivadoAdmin
 from presentes.admin_classes.mecanicas_del_hecho import MecanicaDelHecho, MecanicaDelHechoAdmin
+from presentes.admin_classes.instituciones import Institucion, InstitucionAdmin
 
 class MyGroupAdminForm(forms.ModelForm):
     class Meta:
@@ -47,3 +48,4 @@ admin.site.register(Estudio, EstudioAdmin)
 admin.site.register(LugarDelHecho, LugarDelHechoAdmin)
 admin.site.register(EspacioPrivado, EspacioPrivadoAdmin)
 admin.site.register(MecanicaDelHecho, MecanicaDelHechoAdmin)
+admin.site.register(Institucion, InstitucionAdmin)

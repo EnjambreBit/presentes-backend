@@ -16,6 +16,7 @@ from presentes.views.estudios import EstudioViewSet
 from presentes.views.lugares_del_hecho import LugarDelHechoViewSet
 from presentes.views.espacios_privados import EspacioPrivadoViewSet
 from presentes.views.mecanicas_del_hecho import MecanicaDelHechoViewSet
+from presentes.views.instituciones import InstitucionViewSet
 
 from presentes.views.my_custom_auth import my_obtain_auth_token
 
@@ -32,6 +33,7 @@ router.register("estudios", EstudioViewSet)
 router.register("lugares-del-hecho", LugarDelHechoViewSet)
 router.register("espacios-privados", EspacioPrivadoViewSet)
 router.register("mecanicas-del-hecho", MecanicaDelHechoViewSet)
+router.register("institucion", InstitucionViewSet)
 
 urlpatterns = [
     path('', home, name='home'),

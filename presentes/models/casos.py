@@ -110,6 +110,8 @@ class Caso(models.Model):
 
     #Violencia institucional
     hubo_violencia_institucional = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
+    institucion_involucrada = models.ForeignKey('Institucion', related_name="casos", default=None, blank=True, null=True, on_delete=models.CASCADE)
+    institucion_involucrada_otro = models.CharField(max_length=255, default="", null=True, blank=True, help_text="")
     violencia_institucion_nombre = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     violencia_institucion_localidad = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")
     violencia_institucion_provincia = models.ForeignKey('Provincia', related_name="casos_violencia_institucional", default=None, blank=True, null=True, on_delete=models.CASCADE)

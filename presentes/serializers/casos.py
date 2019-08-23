@@ -9,6 +9,7 @@ from presentes.models.estudios import Estudio
 from presentes.models.lugares_del_hecho import LugarDelHecho
 from presentes.models.espacios_privados import EspacioPrivado
 from presentes.models.mecanicas_del_hecho import MecanicaDelHecho
+from presentes.models.instituciones import Institucion
 from rest_framework_json_api.relations import ResourceRelatedField
 
 
@@ -26,6 +27,7 @@ class CasoSerializer(serializers.ModelSerializer):
     donde_ocurrio_el_hecho = ResourceRelatedField(queryset=LugarDelHecho.objects, many=False, read_only=False, allow_null=True, required=False)
     espacio_privado = ResourceRelatedField(queryset=EspacioPrivado.objects, many=False, read_only=False, allow_null=True, required=False)
     mecanica_del_hecho = ResourceRelatedField(queryset=MecanicaDelHecho.objects, many=False, read_only=False, allow_null=True, required=False)
+    institucion_involucrada = ResourceRelatedField(queryset=Institucion.objects, many=False, read_only=False, allow_null=True, required=False)
 
     imagen_url = serializers.SerializerMethodField()
 
@@ -100,6 +102,8 @@ class CasoSerializer(serializers.ModelSerializer):
             'cj_cuenta_con_defensa',
             'cj_hay_informe_forense',
             'hubo_violencia_institucional',
+            'institucion_involucrada',
+            'institucion_involucrada_otro',
             'violencia_institucion_nombre',
             'violencia_institucion_localidad',
             'violencia_institucion_provincia',
@@ -128,7 +132,8 @@ class CasoSerializer(serializers.ModelSerializer):
         'que_estudios_tiene': 'presentes.serializers.estudios.EstudioSerializer',
         'donde_ocurrio_el_hecho': 'presentes.serializers.lugares_del_hecho.LugarDelHechoSerializer',
         'espacio_privado': 'presentes.serializers.espacios_privados.EspacioPrivadoSerializer',
-        'mecanica_del_hecho': 'presentes.serializers.mecanicas_del_hecho.MecanicaDelHechoSerializer'
+        'mecanica_del_hecho': 'presentes.serializers.mecanicas_del_hecho.MecanicaDelHechoSerializer',
+        'institucion_involucrada': 'presentes.serializers.instituciones.InstitucionSerializer'
     }
 
     class JSONAPIMeta:
@@ -144,5 +149,6 @@ class CasoSerializer(serializers.ModelSerializer):
             'que_estudios_tiene',
             'donde_ocurrio_el_hecho',
             'espacio_privado',
-            'mecanica_del_hecho'
+            'mecanica_del_hecho',
+            'institucion_involucrada'
         ]
