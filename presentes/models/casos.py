@@ -60,6 +60,9 @@ class Caso(models.Model):
 
     la_victima_conocia_al_victimario = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
+    mecanica_del_hecho = models.ForeignKey('MecanicaDelHecho', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
+    mecanica_del_hecho_otro = models.CharField(max_length=255,blank=True, null=True, default="", help_text="")
+
     #Si es muerte
     #Travesticidio y transfemicidio
     causa_de_la_muerte = models.CharField(max_length=200, default="", null=True, blank=True, help_text="")

@@ -15,6 +15,8 @@ from presentes.views.estados_de_caso import EstadoDeCasoViewSet
 from presentes.views.estudios import EstudioViewSet
 from presentes.views.lugares_del_hecho import LugarDelHechoViewSet
 from presentes.views.espacios_privados import EspacioPrivadoViewSet
+from presentes.views.mecanicas_del_hecho import MecanicaDelHechoViewSet
+
 from presentes.views.my_custom_auth import my_obtain_auth_token
 
 router = routers.DefaultRouter(trailing_slash=False)
@@ -29,6 +31,7 @@ router.register("estados-de-caso", EstadoDeCasoViewSet)
 router.register("estudios", EstudioViewSet)
 router.register("lugares-del-hecho", LugarDelHechoViewSet)
 router.register("espacios-privados", EspacioPrivadoViewSet)
+router.register("mecanicas-del-hecho", MecanicaDelHechoViewSet)
 
 urlpatterns = [
     path('', home, name='home'),
