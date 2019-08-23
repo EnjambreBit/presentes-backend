@@ -6,6 +6,8 @@ from presentes.models.etiquetas import Etiqueta
 from presentes.models.organizaciones import Organizacion
 from presentes.models.estados_de_caso import EstadoDeCaso
 from presentes.models.estudios import Estudio
+from presentes.models.lugares_del_hecho import LugarDelHecho
+from presentes.models.espacios_privados import EspacioPrivado
 from rest_framework_json_api.relations import ResourceRelatedField
 
 
@@ -20,6 +22,8 @@ class CasoSerializer(serializers.ModelSerializer):
     denuncia_organizaciones = ResourceRelatedField(queryset=Organizacion.objects, many=True, read_only=False, allow_null=True, required=False)
     estado_de_publicacion = ResourceRelatedField(queryset=EstadoDeCaso.objects, many=False, read_only=False)
     que_estudios_tiene = ResourceRelatedField(queryset=Estudio.objects, many=False, read_only=False, allow_null=True, required=False)
+    donde_ocurrio_el_hecho = ResourceRelatedField(queryset=LugarDelHecho.objects, many=False, read_only=False, allow_null=True, required=False)
+    espacio_privado = ResourceRelatedField(queryset=EspacioPrivado.objects, many=False, read_only=False, allow_null=True, required=False)
     imagen_url = serializers.SerializerMethodField()
 
     def get_imagen_url(self, object):
@@ -47,6 +51,9 @@ class CasoSerializer(serializers.ModelSerializer):
             'categoria',
             'etiquetas',
             'descripcion_del_hecho',
+            'donde_ocurrio_el_hecho',
+            'espacio_privado',
+            'espacio_privado_otro',
             'la_victima_conocia_al_victimario',
             'causa_de_la_muerte',
             'tenia_obra_social',
@@ -113,7 +120,9 @@ class CasoSerializer(serializers.ModelSerializer):
         'estado_de_publicacion': 'presentes.serializers.estados_de_caso.EstadoDeCasoSerializer',
         'cj_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
         'denuncia_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
-        'que_estudios_tiene': 'presentes.serializers.estudios.EstudioSerializer'
+        'que_estudios_tiene': 'presentes.serializers.estudios.EstudioSerializer',
+        'donde_ocurrio_el_hecho': 'presentes.serializers.lugares_del_hecho.LugarDelHechoSerializer',
+        'espacio_privado': 'presentes.serializers.espacios_privados.EspacioPrivadoSerializer'
     }
 
     class JSONAPIMeta:
@@ -126,5 +135,7 @@ class CasoSerializer(serializers.ModelSerializer):
             'cj_organizaciones'
             'denuncia_organizaciones',
             'estado_de_publicacion',
-            'que_estudios_tiene'
+            'que_estudios_tiene',
+            'donde_ocurrio_el_hecho',
+            'espacio_privado'
         ]

@@ -13,6 +13,8 @@ from presentes.admin_classes.casos import Caso, CasoAdmin
 from presentes.admin_classes.estados_de_caso import EstadoDeCaso, EstadoDeCasoAdmin
 from presentes.admin_classes.archivos import Archivo, ArchivoAdmin
 from presentes.admin_classes.estudios import Estudio, EstudioAdmin
+from presentes.admin_classes.lugares_del_hecho import LugarDelHecho, LugarDelHechoAdmin
+from presentes.admin_classes.espacios_privados import EspacioPrivado, EspacioPrivadoAdmin
 
 class MyGroupAdminForm(forms.ModelForm):
     class Meta:
@@ -41,3 +43,5 @@ admin.site.register(Caso, CasoAdmin)
 admin.site.register(EstadoDeCaso, EstadoDeCasoAdmin)
 admin.site.register(Archivo, ArchivoAdmin)
 admin.site.register(Estudio, EstudioAdmin)
+admin.site.register(LugarDelHecho, LugarDelHechoAdmin)
+admin.site.register(EspacioPrivado, EspacioPrivadoAdmin)
