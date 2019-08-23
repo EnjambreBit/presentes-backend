@@ -4,7 +4,7 @@ class MecanicaDelHecho(models.Model):
     nombre = models.CharField(max_length=200, default="", help_text="")
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['nombre']
         db_table = 'mecanicas_del_hecho'
         verbose_name_plural = "Mécanicas del hecho"
 
