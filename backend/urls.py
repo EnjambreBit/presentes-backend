@@ -33,7 +33,7 @@ router.register("estudios", EstudioViewSet)
 router.register("lugares-del-hecho", LugarDelHechoViewSet)
 router.register("espacios-privados", EspacioPrivadoViewSet)
 router.register("mecanicas-del-hecho", MecanicaDelHechoViewSet)
-router.register("institucion", InstitucionViewSet)
+router.register("instituciones", InstitucionViewSet)
 
 urlpatterns = [
     path('', home, name='home'),
