@@ -48,7 +48,7 @@ class CasoViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(Q(nombre__icontains=query) | Q(apellido__icontains=query))
 
         if nombre:
-            queryset = queryset.filter(Q(nombre__icontains=query) | Q(apellido__icontains=query))
+            queryset = queryset.filter(Q(nombre__icontains=nombre) | Q(apellido__icontains=nombre))
 
         if localidad:
             queryset = queryset.filter(localidad__icontains=localidad)
@@ -62,8 +62,8 @@ class CasoViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(estado_de_publicacion__in=[estadoComoObjeto.id])
 
         if categoria:
-            categoriaComoObjeto = Categoria.objects.get(nombre=categoria)
-            queryset = queryset.filter(categoria__in=[categoriaComoObjeto.id])
+            categoriacomoobjeto = Categoria.objects.get(nombre=categoria)
+            queryset = queryset.filter(categoria__in=[categoriacomoobjeto.id])
 
         if etiqueta:
             etiquetaComoObjeto = Etiqueta.objects.get(nombre=etiqueta)
@@ -73,13 +73,42 @@ class CasoViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-    @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='lista-de-casos-publicos')
-    def lista_de_casos_publicos(self, request, *args, **kwargs):
 
-        queryset = self.queryset
-        queryset = queryset.filter(estado_de_publicacion__nombre="Público")
+    @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-filtros')
+    def obtener_filtros_para_casos_publicos(self, request, *args, **kwargs):
+        lista_de_provincias = Provincia.objects.values_list('nombre', flat=True)
+        lista_de_categorias = Categoria.objects.values_list('nombre', flat=True)
+        lista_de_etiquetas = Etiqueta.objects.values_list('nombre', flat=True)
 
-        return queryset
+        data = {
+          "keys": [
+            {
+              "key": "nombre",
+              "title": "Nombre"
+            },
+            {
+              "key": "categoria",
+              "title": "Categoría",
+              "valores": lista_de_categorias
+            },
+            {
+              "key": "etiqueta",
+              "title": "Etiqueta",
+              "valores": lista_de_etiquetas
+            },
+            {
+              "key": "localidad",
+              "title": "Localidad"
+            },
+            {
+              "key": "provincia",
+              "title": "Provincia",
+              "valores": lista_de_provincias
+            }
+          ]
+        }
+
+        return Response(data)
 
     @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos')
     def obtener_casos(self, request, *args, **kwargs):
@@ -119,11 +148,43 @@ class CasoViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos-publicos')
     def obtener_casos_publicos(self, request, *args, **kwargs):
-        casos = Caso.objects.filter(estado_de_publicacion__nombre="Público")
+        queryset = self.queryset
+
+        search = self.request.query_params.get('search', None)
+        nombre = self.request.query_params.get('nombre', None)
+        categoria = self.request.query_params.get('categoria', None)
+        etiqueta = self.request.query_params.get('etiqueta', '')
+        localidad = self.request.query_params.get('localidad', None)
+        provincia = self.request.query_params.get('provincia', '')
+
+        if search and search != "null":
+            queryset = queryset.filter(Q(nombre__icontains=search) | Q(apellido__icontains=search))
+
+        if nombre:
+            queryset = queryset.filter(Q(nombre__icontains=nombre) | Q(apellido__icontains=nombre))
+
+        if categoria:
+            categoriacomoobjeto = Categoria.objects.get(nombre=categoria)
+            queryset = queryset.filter(categoria__in=[categoriacomoobjeto.id])
+
+        if localidad:
+            queryset = queryset.filter(localidad__icontains=localidad)
+
+        if provincia:
+            provinciaComoObjeto = Provincia.objects.get(nombre=provincia)
+            queryset = queryset.filter(provincia__in=[provinciaComoObjeto.id])
+
+        if etiqueta:
+            etiquetaComoObjeto = Etiqueta.objects.get(nombre=etiqueta)
+            queryset = queryset.filter(etiquetas__in=[etiquetaComoObjeto.id])
+
+        queryset = queryset.filter(estado_de_publicacion__nombre="Público")
+
+        queryset = queryset.distinct()
 
         return Response({
-          "meta": { "pagination": { "page": 1, "pages": 1, "count": casos.count()}},
-          "filas": [c.serializar_para_lista() for c in casos]
+          "meta": { "pagination": { "page": 1, "pages": 1, "count": queryset.count()}},
+          "filas": [c.serializar_para_lista() for c in queryset]
         })
 
     @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos-publicos-para-mapa')
