@@ -54,13 +54,13 @@ class Caso(models.Model):
     descripcion_del_hecho = models.TextField(default="", null=True, blank=True, help_text="")
 
     #Si es ataque a personas o asesinato
-    donde_ocurrio_el_hecho = models.ForeignKey('LugarDelHecho', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
-    espacio_privado = models.ForeignKey('EspacioPrivado', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
+    donde_ocurrio_el_hecho = models.ForeignKey('LugarDelHecho', blank=True, related_name="casos", default=None, null=True, on_delete=models.CASCADE)
+    espacio_privado = models.ForeignKey('EspacioPrivado', blank=True, related_name="casos", default=None, null=True, on_delete=models.CASCADE)
     espacio_privado_otro = models.CharField(max_length=255,blank=True, null=True, default="", help_text="")
 
     la_victima_conocia_al_victimario = models.CharField(max_length=2, choices=OPCIONES_SI_NO, default=None, null=True, blank=True)
 
-    mecanica_del_hecho = models.ForeignKey('MecanicaDelHecho', related_name="casos", default=None, null=True, on_delete=models.CASCADE)
+    mecanica_del_hecho = models.ForeignKey('MecanicaDelHecho', blank=True, related_name="casos", default=None, null=True, on_delete=models.CASCADE)
     mecanica_del_hecho_otro = models.CharField(max_length=255,blank=True, null=True, default="", help_text="")
 
     #Si es muerte
