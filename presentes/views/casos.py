@@ -114,6 +114,16 @@ class CasoViewSet(viewsets.ModelViewSet):
     def obtener_casos(self, request, *args, **kwargs):
         casos = Caso.objects.all()
 
+        categoria = self.request.query_params.get('categoria', None)
+        anio = self.request.query_params.get('anio', None)
+
+        if anio:
+            casos = casos.filter(fecha_del_hecho__year=anio)
+
+        if categoria:
+            categoriacomoobjeto = Categoria.objects.get(nombre=categoria)
+            casos = casos.filter(categoria__in=[categoriacomoobjeto.id])
+
         data = []
         for c in casos:
             datos = {}
@@ -156,6 +166,7 @@ class CasoViewSet(viewsets.ModelViewSet):
         etiqueta = self.request.query_params.get('etiqueta', '')
         localidad = self.request.query_params.get('localidad', None)
         provincia = self.request.query_params.get('provincia', '')
+        anio = self.request.query_params.get('anio', None)
 
         if search and search != "null":
             queryset = queryset.filter(Q(nombre__icontains=search) | Q(apellido__icontains=search))
@@ -178,6 +189,10 @@ class CasoViewSet(viewsets.ModelViewSet):
             etiquetaComoObjeto = Etiqueta.objects.get(nombre=etiqueta)
             queryset = queryset.filter(etiquetas__in=[etiquetaComoObjeto.id])
 
+        if anio:
+            queryset = queryset.filter(fecha_del_hecho__year=anio)
+
+
         queryset = queryset.filter(estado_de_publicacion__nombre="Público")
 
         queryset = queryset.distinct()
@@ -189,7 +204,18 @@ class CasoViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, permission_classes=[permissions.IsAuthenticatedOrReadOnly], methods=['get'], url_path='obtener-casos-publicos-para-mapa')
     def obtener_casos_publicos_para_mapa(self, request, *args, **kwargs):
+
         casos = Caso.objects.filter(estado_de_publicacion__nombre="Público")
+
+        categoria = self.request.query_params.get('categoria', None)
+        anio = self.request.query_params.get('anio', None)
+
+        if anio:
+            casos = casos.filter(fecha_del_hecho__year=anio)
+
+        if categoria:
+            categoriacomoobjeto = Categoria.objects.get(nombre=categoria)
+            casos = casos.filter(categoria__in=[categoriacomoobjeto.id])
 
         return Response([c.serializar_para_mapa() for c in casos]
         )
