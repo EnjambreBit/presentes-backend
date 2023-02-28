@@ -98,5 +98,5 @@ realizar_backup_desde_produccion:
 
 cargar_ultimo_dump_localmente:
 	@echo "${G}Se cargará el dump mas reciente: ${DB_DUMP_MAS_RECIENTE}${N}"
-	dropdb --if-exists presentes-db -e; createdb presentes-db
-	pg_restore --no-acl --no-owner -d presentes-db ${DB_DUMP_MAS_RECIENTE}
+	dropdb -U postgres --if-exists presentes-db -e; createdb -U postgres presentes-db
+	pg_restore -U postgres --no-acl --no-owner -d presentes-db ${DB_DUMP_MAS_RECIENTE}
