@@ -7,7 +7,6 @@ name = "pypi"
 django = "==2.2.1"
 dj-static = "==0.0.6"
 dj-database-url = "==0.5.0"
-ipdb = "==0.12"
 watchdog = "==0.9.0"
 "psycopg2-binary" = "==2.8.2"
 honcho = "==1.0.1"
@@ -32,4 +31,4 @@ django-easy-audit = "==1.1"
 [dev-packages]
 
 [requires]
-python_version = "3.6.6"
+python_version = "3.8.10"
