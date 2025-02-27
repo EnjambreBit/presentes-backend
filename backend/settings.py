@@ -12,11 +12,32 @@ BACKEND_URL = os.environ.get('BACKEND_URL')
 
 HOST_BACKEND = BACKEND_URL.replace("http://", "").replace("https://", "")
 
-DEBUG = False
+DEBUG = True
 
 VERSION_NUMBER = "0.0.21"
-ALLOWED_HOSTS = ['127.0.0.21', '127.0.0.210', 'localhost', 'localhost:4200', 'presentes.enjambrelab.space', 'presentes-backend.enjambrelab.space', '127.0.0.1', 'mapa.agenciapresentes.org', HOST_BACKEND]
-CORS_ORIGIN_WHITELIST = ALLOWED_HOSTS
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1',
+    'http://127.0.0.21',
+    'http://127.0.0.210',
+    'http://localhost',
+    'http://localhost:4200',
+    'http://localhost:8000',
+    'https://mapa.agenciapresentes.org',
+    'https://presentes-backend.enjambrelab.ar',
+    'https://presentes.enjambrelab.ar',
+]
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '127.0.0.21',
+    '127.0.0.210',
+    'localhost',
+    'localhost:4200',
+    'localhost:8000',
+    'mapa.agenciapresentes.org',
+    'presentes-backend.enjambrelab.ar',
+    'presentes.enjambrelab.ar',
+]
 
 JSON_API_FORMAT_FIELD_NAMES = 'dasherize'
 JSON_API_FORMAT_RELATION_KEYS = 'dasherize'
@@ -144,3 +165,5 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.environ.get('PRESENTES_MEDIA_ROOT', 'media_archivos_locales')
 MEDIA_URL = '/media/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
