@@ -2,6 +2,7 @@ from rest_framework import serializers
 from presentes.models.organizaciones import Organizacion
 from presentes.models.provincias import Provincia
 from rest_framework_json_api.relations import ResourceRelatedField
+from presentes.serializers.provincias import ProvinciaSerializer
 
 
 class OrganizacionSerializer(serializers.ModelSerializer):
@@ -30,8 +31,9 @@ class OrganizacionSerializer(serializers.ModelSerializer):
         )
 
     included_serializers = {
-        'provincia': 'presentes.serializers.provincias.ProvinciaSerializer'
+        'provincia': ProvinciaSerializer,
     }
 
     class JSONAPIMeta:
+        resource_name = 'organizaciones'
         included_resources = ['provincia']

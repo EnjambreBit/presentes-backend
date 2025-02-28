@@ -33,4 +33,5 @@ class PerfilSerializer(serializers.ModelSerializer):
         )
 
     class JSONAPIMeta:
+        resource_name = 'perfiles'
         included_resources = ['grupos']

@@ -12,7 +12,7 @@ BACKEND_URL = os.environ.get('BACKEND_URL')
 
 HOST_BACKEND = BACKEND_URL.replace("http://", "").replace("https://", "")
 
-DEBUG = True
+DEBUG = False
 
 VERSION_NUMBER = "0.0.21"
 CORS_ORIGIN_WHITELIST = [

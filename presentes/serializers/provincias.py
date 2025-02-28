@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from presentes.models.provincias import Provincia
 from rest_framework_json_api.relations import ResourceRelatedField
-
+from presentes.serializers.paises import PaisSerializer
 
 class ProvinciaSerializer(serializers.ModelSerializer):
 
@@ -12,8 +12,9 @@ class ProvinciaSerializer(serializers.ModelSerializer):
         fields = ('id', 'nombre', 'sigla', 'pais')
 
     included_serializers = {
-        'pais': 'presentes.serializers.paises.PaisSerializer'
+        'pais': PaisSerializer,
     }
 
     class JSONAPIMeta:
+        resource_name = 'provincias'
         included_resources = ['pais',]

@@ -12,6 +12,16 @@ from presentes.models.mecanicas_del_hecho import MecanicaDelHecho
 from presentes.models.instituciones import Institucion
 from rest_framework_json_api.relations import ResourceRelatedField
 
+from presentes.serializers.provincias import ProvinciaSerializer
+from presentes.serializers.categorias import CategoriaSerializer
+from presentes.serializers.etiquetas import EtiquetaSerializer
+from presentes.serializers.organizaciones import OrganizacionSerializer
+from presentes.serializers.estados_de_caso import EstadoDeCasoSerializer
+from presentes.serializers.estudios import EstudioSerializer
+from presentes.serializers.lugares_del_hecho import LugarDelHechoSerializer
+from presentes.serializers.espacios_privados import EspacioPrivadoSerializer
+from presentes.serializers.mecanicas_del_hecho import MecanicaDelHechoSerializer
+from presentes.serializers.instituciones import InstitucionSerializer
 
 class CasoSerializer(serializers.ModelSerializer):
 
@@ -121,22 +131,23 @@ class CasoSerializer(serializers.ModelSerializer):
         ]
 
     included_serializers = {
-        'etiquetas': 'presentes.serializers.etiquetas.EtiquetaSerializer',
-        'provincia': 'presentes.serializers.provincias.ProvinciaSerializer',
-        'provincia_del_penal': 'presentes.serializers.provincias.ProvinciaSerializer',
-        'violencia_institucion_provincia': 'presentes.serializers.provincias.ProvinciaSerializer',
-        'categoria': 'presentes.serializers.categorias.CategoriaSerializer',
-        'estado_de_publicacion': 'presentes.serializers.estados_de_caso.EstadoDeCasoSerializer',
-        'cj_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
-        'denuncia_organizaciones': 'presentes.serializers.organizaciones.OrganizacionSerializer',
-        'que_estudios_tiene': 'presentes.serializers.estudios.EstudioSerializer',
-        'donde_ocurrio_el_hecho': 'presentes.serializers.lugares_del_hecho.LugarDelHechoSerializer',
-        'espacio_privado': 'presentes.serializers.espacios_privados.EspacioPrivadoSerializer',
-        'mecanica_del_hecho': 'presentes.serializers.mecanicas_del_hecho.MecanicaDelHechoSerializer',
-        'institucion_involucrada': 'presentes.serializers.instituciones.InstitucionSerializer'
+        'etiquetas': EtiquetaSerializer,
+        'provincia': ProvinciaSerializer,
+        'provincia_del_penal': ProvinciaSerializer,
+        'violencia_institucion_provincia': ProvinciaSerializer,
+        'categoria': CategoriaSerializer,
+        'estado_de_publicacion': EstadoDeCasoSerializer,
+        'cj_organizaciones': OrganizacionSerializer,
+        'denuncia_organizaciones': OrganizacionSerializer,
+        'que_estudios_tiene': EstudioSerializer,
+        'donde_ocurrio_el_hecho': LugarDelHechoSerializer,
+        'espacio_privado': EspacioPrivadoSerializer,
+        'mecanica_del_hecho': MecanicaDelHechoSerializer,
+        'institucion_involucrada': InstitucionSerializer
     }
 
     class JSONAPIMeta:
+        resource_name = 'casos'
         included_resources = [
             'categoria',
             'etiquetas',

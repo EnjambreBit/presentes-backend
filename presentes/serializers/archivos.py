@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from presentes.models.archivos import Archivo
 from rest_framework_json_api.relations import ResourceRelatedField
+from presentes.serializers.casos import CasoSerializer
 
 
 class ArchivoSerializer(serializers.ModelSerializer):
@@ -12,8 +13,9 @@ class ArchivoSerializer(serializers.ModelSerializer):
         fields = ('id', 'archivo', 'caso')
 
     included_serializers = {
-        'caso': 'presentes.serializers.casos.CasoSerializer'
+        'caso': CasoSerializer
     }
 
     class JSONAPIMeta:
+        resource_name = 'archivos'
         included_resources = ['caso',]
