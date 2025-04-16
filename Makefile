@@ -79,7 +79,7 @@ version:
 	@git push --tags
 
 deploy:
-	git remote add dokku dokku@enjambrelab.space:presentes-backend || true
+	git remote add dokku dokku@enjambrelab.ar:presentes-backend || true
 	git checkout master
 	git push dokku master
 
@@ -94,9 +94,10 @@ monitor:
 
 realizar_backup_desde_produccion:
 	@echo "${G}Creando el archivo ${DB_NOMBRE_DEL_DUMP}${N}"
-	@ssh dokku@enjambrelab.space postgres:export presentes-db > ${DB_NOMBRE_DEL_DUMP}
+	@ssh dokku@enjambrelab.ar postgres:export presentes-db > ${DB_NOMBRE_DEL_DUMP}
 
 cargar_ultimo_dump_localmente:
 	@echo "${G}Se cargará el dump mas reciente: ${DB_DUMP_MAS_RECIENTE}${N}"
-	dropdb -U postgres --if-exists presentes-db -e; createdb -U postgres presentes-db
-	pg_restore -U postgres --no-acl --no-owner -d presentes-db ${DB_DUMP_MAS_RECIENTE}
+	dropdb -U postgres --if-exists presentes-db -e
+	createdb -U postgres presentes-db
+	pg_restore -U postgres --no-acl --no-owner --single-transaction -d presentes-db ${DB_DUMP_MAS_RECIENTE} || true
